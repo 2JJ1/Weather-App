@@ -1,0 +1,19 @@
+{
+  "name": "weather-app",
+  "version": "1.0.0",
+  "description": "Weather display app for my portfolio. Technologies: HTML, CSS, Javascript, Bootstrap, Node.js, Express.js, EJS",
+  "main": "index.js",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "moment": "^2.28.0",
+    "oauth": "^0.9.15"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jonathon Powell",
+  "license": "ISC"
+}

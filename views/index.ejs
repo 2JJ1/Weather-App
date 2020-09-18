@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <title>Forecast For <%= weather.location.city %></title>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <link rel="stylesheet" href="/assets/css/forecast.css" type="text/css">
+    </head>
+    <body>
+        <div id="weather-gist" class="bg-<%= isDay ? "info" : "dark" %> text-white">
+            <div>
+                <h2 class="text-center">
+                    <%= `${weather.location.city} ${weather.location.region}, ${weather.location.country}` %> 
+                    <span id="edit" data-toggle="modal" data-target="#locationEditModal"></span>
+                </h2>
+                <p class="text-center"><%= weather.current_observation.condition.text %></p>
+                <p class="text-center display-4"><%= weather.current_observation.condition.temperature %>°F</p>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md mb-5">
+                            <div>
+                                <p class="border-bottom border-white pb-3 font-weight-bold">Current Observations</p>
+                                <p>Feels like: <%= weather.current_observation.wind.chill %>°</p>
+                                <p>Humidity: <%= weather.current_observation.atmosphere.humidity %></p>
+                                <p>Visibility: <%= weather.current_observation.atmosphere.visibility %> miles</p>
+                                <p><%= weather.current_observation.condition.text %> with a high of <%= weather.forecasts[0].high %>°F and a low of <%= weather.forecasts[0].low %>°F. <%= weather.current_observation.wind.direction %>° winds at <%= weather.current_observation.wind.speed %> MPH.</p>
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <div>
+                                <p class="border-bottom border-white pb-3 font-weight-bold">Forecast</p>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col">
+                                            <p>Day</p>
+                                        </div>
+                                        <div class="col-6 text-center">
+                                            <p>Sky</p>
+                                        </div>
+                                        <div class="col text-center">
+                                            <p>High</p>
+                                        </div>
+                                        <div class="col text-center">
+                                            <p>Low</p>
+                                        </div>
+                                    </div>
+                                    <% weather.forecasts.forEach(forecast => { %>
+                                    <div class="row">
+                                        <div class="col">
+                                            <%= forecast.day %>
+                                        </div>
+                                        <div class="col-6 text-center">
+                                            <%= forecast.text %>
+                                        </div>
+                                        <div class="col text-center">
+                                            <%= forecast.high %>
+                                        </div>
+                                        <div class="col text-center">
+                                            <%= forecast.low %>
+                                        </div>
+                                    </div>
+                                    <% }) %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <footer>
+            <p class="text-center">© 2020 <a href="https://powell.gg">Powell.gg</a></p>
+        </footer>
+
+        <!-- Location Edit - Modal -->
+        <div class="modal fade" id="locationEditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">What city's weather are you interested in?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <input id="addressInput" type="text">
+                </div>
+                <div class="modal-footer">
+                <button id="searchWeather" type="button" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <!-- Bootstrap -->
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+        <!-- Address autocomplete -->
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<%- GCAPI %>&libraries=places"></script>
+        <script>
+            $(document).ready(function () {
+                var autocomplete;
+                autocomplete = new google.maps.places.Autocomplete(document.getElementById("addressInput"), {types: ["(cities)"]});
+                google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                    var near_place = autocomplete.getPlace();
+                });
+            });
+
+            document.getElementById("searchWeather").onclick = function(){
+                window.location.href = "/?location=" + document.getElementById("addressInput").value
+            }
+        </script>
+    </body>
+</html>

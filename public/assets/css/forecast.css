@@ -1,0 +1,25 @@
+#weather-gist{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#weather-gist > div{
+    width: 100%;
+    padding: 12px;
+}
+
+#edit{
+    background: url("/assets/icons/create-white-18dp.svg");
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-size: cover;
+    cursor: pointer;
+}
+
+.pac-container{
+    z-index: 1100;
+}
