@@ -14,7 +14,7 @@ module.exports = async function(ipAddress, options){
     if(!geoRes.continent_code) throw new Error("Geolocation failed")
 
     if(typeof options === "object" && options.stringify){
-        return `${city} ${region_name}, ${country_name}`
+        return `${geoRes.city} ${geoRes.region_name}, ${geoRes.country_name}`
     }
     else return geoRes
 }
