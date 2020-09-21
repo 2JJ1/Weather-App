@@ -11,6 +11,7 @@ Built with Bootstrap, Yahoo weather API, Google Places API, Node.js, Express.js,
 Populate the .env with the following. 
 Get your Yahoo API credentials at https://developer.yahoo.com/weather/
 Get your Google Cloud API key at https://console.cloud.google.com/apis/library. Enable the "Maps JavaScript API".
+Get your Geolocation API key at https://ipstack.com/
 ```
 NODE_ENV=development
 PORT=8080
@@ -18,6 +19,7 @@ YAHOO_WEATHER_APP_ID=
 YAHOO_WEATHER_CONSUMER_KEY=
 YAHOO_WEATHER_CONSUMER_SECRET=
 GOOGLE_CLOUD_API_KEY=
+GEOLOCATION_API_KEY=
 ```
 
 ### To-do

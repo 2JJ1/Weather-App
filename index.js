@@ -2,6 +2,7 @@ require("dotenv").config()
 const express = require("express")
 const moment = require("moment")
 const RequestForecast = require("./requestforecast")
+const Geolocate = require("./geolocate")
 const app = express()
 
 app.set("views", "views")
@@ -15,7 +16,10 @@ app.get("/", async (req, res) => {
         //Where to get the weather information for
         var {location} = req.query
 
-        //If a location was not specified, choose a random one from the list
+        //A ttempt to use their current location if location not manually specified
+        if(!location) location = await Geolocate(req.header('x-forwarded-for') || req.connection.remoteAddress, {stringify: true}).catch(()=>{})
+
+        //Choose a random location from the list if a location is still not defined(e.g Geolocation failed due to rate-limit)
         if(!location) location = cities[Math.floor(Math.random() * cities.length)]
         
         //Find the weather for the specified location
