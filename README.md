@@ -3,8 +3,6 @@ Displays the weather information for the specified location. Created to be a fun
 
 Built with Bootstrap, Yahoo weather API, Google Places API, Node.js, Express.js, and EJS. 
 
-Live at https://weather.powell.gg/
-
 ## Setup
 1. Install the node modules
 ```npm install```  
